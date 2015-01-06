@@ -109,6 +109,11 @@ sub vcl_fetch {
         /* marker for vcl_deliver to reset Age: */
         set beresp.http.magicmarker = "1";
     }
+
+    if (!(req.url ~ "wp-(login|admin)")) {
+        unset beresp.http.set-cookie;
+        set beresp.ttl = 3600s;
+    }
 }
  
 sub vcl_deliver {
@@ -118,5 +123,11 @@ sub vcl_deliver {
  
         /* By definition we have a fresh object */
         set resp.http.age = "0";
+
+        if (obj.hits > 0) {
+                set resp.http.X-Cache = "HIT";
+        } else {
+                set resp.http.X-Cache = "MISS";
+        }
     }
 }
