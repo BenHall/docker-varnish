@@ -19,7 +19,7 @@ sub vcl_recv {
     set req.http.X-Forwarded-For = client.ip;
  
  
-    if (req.http.host != "blog.benhall.me.uk") {
+    if (req.http.host != "VARNISH_BACKEND_DOMAIN") {
       return(pass);
     }
  
