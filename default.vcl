@@ -19,7 +19,7 @@ sub vcl_recv {
     set req.http.X-Forwarded-For = client.ip;
  
  
-    if (req.http.host != "example.com" && req.http.host != "www.example.com") {
+    if (req.http.host != "blog.benhall.me.uk") {
       return(pass);
     }
  
