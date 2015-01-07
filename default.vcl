@@ -3,6 +3,12 @@ backend default {
   .port = "{VARNISH_BACKEND_PORT}";
 }
 
+acl purge {
+	"localhost";
+	"127.0.0.1";
+	"172.17.42.1";
+}
+
 sub vcl_recv {
   if (req.request != "GET" &&
       req.request != "HEAD" &&
