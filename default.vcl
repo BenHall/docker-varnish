@@ -47,7 +47,6 @@ sub vcl_fetch {
 
   #bypass the proxy if the url contains the admin, login, preview or the xmlrpc
   if (req.url ~ "wp-(login|admin)" || req.url ~ "preview=true" || req.url ~ "xmlrpc.php") {
-    set obj.ttl = 1w;
     return (hit_for_pass);
   }
 
