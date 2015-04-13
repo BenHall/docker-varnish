@@ -39,12 +39,15 @@ sub vcl_miss {
 }
 
 sub vcl_fetch {
+  set beresp.ttl = 1w;
+
   if (req.url ~ "^/$") {
     unset beresp.http.set-cookie;
   }
 
   #bypass the proxy if the url contains the admin, login, preview or the xmlrpc
   if (req.url ~ "wp-(login|admin)" || req.url ~ "preview=true" || req.url ~ "xmlrpc.php") {
+    set obj.ttl = 1w;
     return (hit_for_pass);
   }
 
